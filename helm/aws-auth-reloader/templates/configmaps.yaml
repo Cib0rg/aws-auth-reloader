@@ -1,0 +1,51 @@
+{{ $region := required "A valid .Values.awsRegion entry required!" .Values.awsRegion }}
+{{ $clusterName := required "A valid .Values.clusterName entry required!" .Values.clusterName }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+    {{- with .Values.cmAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "aws-auth-reloader.selectorLabels" . | nindent 4 }}
+data:
+  AWS_REGION: {{ $region }}
+{{- if not (empty .Values.awsAccessKeyID) }}
+  AWS_ACCESS_KEY_ID: {{ .Values.awsAccessKeyID }}
+{{- end }}
+{{- if not (empty .Values.awsSecretAccessKey) }}
+  AWS_SECRET_ACCESS_KEY: {{ .Values.awsSecretAccessKey }}
+{{- end }}
+{{- if not (empty .Values.logLevel) }}
+  LOG_LEVEL: {{ .Values.logLevel }}
+{{- end }}
+{{- if not (empty .Values.dryRun) }}
+  DRY_RUN: {{ .Values.dryRun | quote }}
+{{- end }}
+{{- if not (empty .Values.tagPrefix) }}
+  TAG_PREFIX: {{ .Values.tagPrefix }}
+{{- end }}
+  CLUSTER_NAME: {{ $clusterName }}
+{{- if not (empty .Values.refreshInterval) }}
+  REFRESH_INTERVAL: {{ .Values.refreshInterval | quote }}
+{{- end }}
+---
+{{ if .Values.protectedEntities -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-pe
+  {{- with .Values.cmAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "aws-auth-reloader.selectorLabels" . | nindent 4 }}
+data:
+  protected.txt: |
+{{- range $v := .Values.protectedEntities }}
+  {{ $v | indent 2}}
+{{- end }}
+{{- end -}}

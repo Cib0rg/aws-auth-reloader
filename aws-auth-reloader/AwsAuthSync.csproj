@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>aws_console</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Core" Version="3.7.200.14" />
+    <PackageReference Include="AWSSDK.IAMRolesAnywhere" Version="3.7.200.14" />
+    <PackageReference Include="AWSSDK.IdentityManagement" Version="3.7.200.14" />
+    <PackageReference Include="KubeOps.KubernetesClient" Version="7.4.2" />
+    <PackageReference Include="NLog" Version="5.2.3" />
+    <PackageReference Include="YamlDotNet" Version="13.1.1" />
+  </ItemGroup>
+
+</Project>

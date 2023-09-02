@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "aws-console": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "LOG_LEVEL": "trace",
+        "AWS_REGION": "us-west-2"
+      }
+    }
+  }
+}
