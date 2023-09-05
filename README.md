@@ -13,6 +13,16 @@ docker build -t <some-tag> .
 
 ## Usage
 
+Just put tags on your IAM entities! Like this:
+|Tag name|Tag value|
+|--------|---------|
+|cluster:test-cluster|system:masters|
+|cluster:our-stage|developers admins|
+|cluster:production|readonly|
+
+This means that in test-cluster this IAM entity will be with system:masters group, in "our-stage" will be two groups (developera and admins, separated by space) and production will be readonly group. Prefix for tag name can be changed, see table below.
+Oh, yes, groups should be created by separated process. This operator only applies them, not creates.
+
 ## Configuration
 
 Chart are accepting following configuration variables:
